@@ -35,7 +35,7 @@ solana-transaction-status = "1.7.4"
 solana-vote-program = "1.7.4"
 spl-stake-pool = "0.4"
 spl-token = "3.1"
-thiserror = "1.0.25"
+thiserror = "1.0.26"
 
 [dev-dependencies]
 indicatif = "0.15.0"

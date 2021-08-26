@@ -4,7 +4,10 @@
 #
 set -ex
 
-"$(dirname "$0")"/fetch-release.sh "$STAKE_O_MATIC_RELEASE"
+#"$(dirname "$0")"/fetch-release.sh "$STAKE_O_MATIC_RELEASE"
+curl https://sh.rustup.rs -sSf | sh -s -- -y
+source $HOME/.cargo/env
+solana_stake_o_matic="cargo run --bin solana-stake-o-matic --"
 
 if [[ -n $FOLLOWER ]]; then
   REQUIRE_CLASSIFICATION="--require-classification"
@@ -68,13 +71,13 @@ STAKE_POOL_ARGS=(
 )
 
 if [[ $CLUSTER = "testnet-stake-pool" ]]; then
-  ./solana-stake-o-matic "${TESTNET_ARGS[@]}" "${STAKE_POOL_ARGS[@]}"
+  $solana_stake_o_matic "${TESTNET_ARGS[@]}" "${STAKE_POOL_ARGS[@]}"
 elif [[ $CLUSTER = "mainnet-beta-stake-pool" ]]; then
-  ./solana-stake-o-matic "${MAINNET_BETA_ARGS[@]}" "${STAKE_POOL_ARGS[@]}"
+  $solana_stake_o_matic "${MAINNET_BETA_ARGS[@]}" "${STAKE_POOL_ARGS[@]}"
 elif [[ $CLUSTER == "testnet" ]]; then
-  ./solana-stake-o-matic "${TESTNET_ARGS[@]}" "${NOT_A_STAKE_POOL_ARGS[@]}"
+  $solana_stake_o_matic "${TESTNET_ARGS[@]}" "${NOT_A_STAKE_POOL_ARGS[@]}"
 elif [[ $CLUSTER == "mainnet-beta" ]]; then
-  ./solana-stake-o-matic "${MAINNET_BETA_ARGS[@]}" "${NOT_A_STAKE_POOL_ARGS[@]}"
+  $solana_stake_o_matic "${MAINNET_BETA_ARGS[@]}" "${NOT_A_STAKE_POOL_ARGS[@]}"
 else
   echo "CLUSTER must be set to testnet-stake-pool, mainnet-beta-stake-pool, testnet, or mainnet-beta"
   exit 1

@@ -827,6 +827,7 @@ mod test {
             native_token::sol_to_lamports,
             signature::{Keypair, Signer},
         },
+        solana_streamer::socket::SocketAddrSpace,
         solana_validator::test_validator::*,
     };
 
@@ -909,7 +910,7 @@ mod test {
             MINIMUM_SLOTS_PER_EPOCH,
             /* enable_warmup_epochs = */ false,
         ));
-        let (test_validator, authorized_staker) = test_validator_genesis.start();
+        let (test_validator, authorized_staker) = test_validator_genesis.start(SocketAddrSpace::Unspecified);
 
         let (rpc_client, _recent_blockhash, _fee_calculator) = test_validator.rpc_client();
 

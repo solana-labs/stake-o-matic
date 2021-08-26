@@ -1051,6 +1051,7 @@ mod test {
             native_token::sol_to_lamports,
             signature::{Keypair, Signer},
         },
+        solana_streamer::socket::SocketAddrSpace,
         solana_validator::test_validator::*,
         spl_stake_pool::find_withdraw_authority_program_address,
     };
@@ -1142,7 +1143,7 @@ mod test {
                 /* enable_warmup_epochs = */ false,
             ))
             .add_program("spl_stake_pool", spl_stake_pool::id());
-        let (test_validator, authorized_staker) = test_validator_genesis.start();
+        let (test_validator, authorized_staker) = test_validator_genesis.start(SocketAddrSpace::Unspecified);
 
         let (rpc_client, _recent_blockhash, _fee_calculator) = test_validator.rpc_client();
 
